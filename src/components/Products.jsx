@@ -1,15 +1,30 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import AddProduct from "./AddProduct.jsx"
+import Product from "./Product.jsx"
+import Pagination from "./Pagination.jsx";
+import axios from 'axios';
+import { Flex, Grid,  } from "@chakra-ui/react";
 const Products = () => {
-  // TODO: Remove below const and instead import them from chakra
-  const Flex = () => <div />;
-  const Grid = () => <div />;
-
+  const [LinkwaladData, setLinkwalaData] = useState([])
+  useEffect(()=>{
+    const getDatafromAxios = async()=>{
+      let datafromLink = await axios.get("http://localhost:8080/products")
+      setLinkwalaData(datafromLink.data)
+      
+    };
+    getDatafromAxios();
+  },[])
+  
   return (
     <Flex>
-      {/*  AddProduct */}
-      <Grid>{/* List of Products */}</Grid>
-      {/* Pagination */}
+      <AddProduct>
+      </AddProduct>
+      <Grid>
+        <Product data={LinkwaladData}>
+        </Product>
+      </Grid>
+      <Pagination>
+      </Pagination>
     </Flex>
   );
 };
